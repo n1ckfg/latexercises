@@ -1,0 +1,213 @@
+% 05_multilingual_critical.tex
+% Multilingual text and critical apparatus for Digital Humanities
+% Overleaf compatible: YES (polyglossia + XeLaTeX/LuaLaTeX)
+
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{reledmac}
+\usepackage{reledpar}
+\usepackage{parallel}
+\usepackage{verse}
+\usepackage{geometry}
+
+% Language setup
+\setmainlanguage{english}
+\setotherlanguages{latin,greek,french,german,hebrew,arabic}
+
+% Fonts for different scripts
+\newfontfamily\latinfont{Latin Modern Roman}
+\newfontfamily\greekfont{GFS Didot}
+\newfontfamily\hebrewfont{David CLM}
+\newfontfamily\arabicfont{Amiri}
+
+% Critical apparatus setup
+\Xarrangement[A]{paragraph}
+\Xarrangement[B]{paragraph}
+\Xwrapexplanations[A]{\par}
+\Xwrapexplanations[B]{\par}
+\XnotesWidth[A]{0.9\textwidth}
+\XnotesWidth[B]{0.9\textwidth}
+\linenumincrement*{5}
+\firstlinenum*{1}
+
+% Parallel text setup
+\setlength{\ParallelLTextWidth}{0.45\textwidth}
+\setlength{\ParallelRTextWidth}{0.45\textwidth}
+\setlength{\ParallelAtEnd{\vspace{1em}}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=cyan
+}
+
+\title{Multilingual Text and Critical Apparatus}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This example demonstrates multilingual typesetting and critical apparatus
+for Digital Humanities: parallel texts, critical editions with apparatus
+criticus, manuscript collation, and mixed-script documents.
+\end{abstract}
+
+\section{Multilingual Typesetting with Polyglossia}\label{sec:polyglossia}
+Main text in English.
+
+\begin{french}
+Ceci est du texte en français.
+\end{french}
+
+\begin{german}
+Dies ist ein deutscher Text.
+\end{german}
+
+\begin{latin}
+Hic est textus latine scriptus.
+\end{latin}
+
+\begin{greek}
+Αὐτὸς ἐστιν ὁ λόγος Ἑλληνιστὶ γεγραμμένος.
+\end{greek}
+
+\begin{hebrew}
+זֶה טֶקְסְט בְּעִבְרִית.
+\end{hebrew}
+
+\begin{arabic}
+هذا نص باللغة العربية.
+\end{arabic}
+
+Mixed inline: English, \textfrench{français}, \textgerman{Deutsch},
+\textlatin{Latine}, \textgreek{Ἑλληνιστί}, \texthebrew{עִבְרִית}, \textarabic{العربية}.
+
+\section{Right-to-Left Text}\label{sec:rtl}
+Arabic paragraph:
+\begin{arabic}
+الفصل الأول من الكتاب يبدأ هنا. النص يكتب من اليمين إلى اليسار.
+الأرقام تكتب من اليسار إلى اليمين: ١٢٣٤٥.
+\end{arabic}
+
+Hebrew paragraph:
+\begin{hebrew}
+הפרק הראשון של הספר מתחיל כאן. הטקסט נכתב מימין לשמאל.
+המספרים נכתבים משמאל לימין: 12345.
+\end{hebrew}
+
+\section{Parallel Texts (Facing Translation)}\label{sec:parallel}
+\begin{Parallel}{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{
+\begin{latin}
+\textbf{Latin Original:}\\
+In principio creavit Deus caelum et terram.\\
+Terra autem erat inanis et vacua,\\
+et tenebrae super faciem abyssi.\\
+Et spiritus Dei ferebatur super aquas.
+}
+\ParallelRText{
+\textbf{English Translation:}\\
+In the beginning God created the heaven and the earth.\\
+And the earth was without form, and void;\\
+and darkness was upon the face of the deep.\\
+And the Spirit of God moved upon the face of the waters.
+}
+\ParallelPar
+\end{Parallel}
+
+\section{Critical Apparatus with reledmac}\label{sec:apparatus}
+\begin{numbering}{section}
+\beginnumbering
+\pstart
+\edtext{In principio}{\Afootnote{In initio \ms{A} \ms{B}; In principio \ms{C} \ms{D}}}
+\edtext{creavit}{\Afootnote{creavit \ms{A} \ms{B} \ms{C}; fecit \ms{D}}}
+Deus \edtext{caelum}{\Bfootnote{caelum \ms{A} \ms{B}; caelos \ms{C} \ms{D}}}
+et terram.
+\pend
+\pstart
+Terra autem \edtext{erat}{\Afootnote{erat \ms{A} \ms{B} \ms{C}; fuit \ms{D}}}
+inanis et vacua,
+et tenebrae \edtext{super}{\Afootnote{super \ms{A} \ms{B}; supra \ms{C} \ms{D}}}
+faciem abyssi.
+\pend
+\endnumbering
+\end{numbering}
+
+\section{Apparatus with Multiple Layers (A=substantive, B=orthographic)}\label{sec:multiapparatus}
+\begin{numbering}{section}
+\beginnumbering
+\pstart
+\edtext{In principio}{\Afootnote{In initio \ms{A}; In principio \ms{B} \ms{C} \ms{D}}%
+  \Bfootnote{principio] principio \ms{A} \ms{B}; principio \ms{C} \ms{D}}}
+creavit Deus caelum et terram.
+\pend
+\endnumbering
+\end{numbering}
+
+\section{Manuscript Sigla and Witnesses}\label{sec:sigla}
+% Define manuscript sigla
+\def\msA{\textit{A}}  % Codex Vaticanus
+\def\msB{\textit{B}}  % Codex Sinaiticus
+\def\msC{\textit{C}}  % Codex Alexandrinus
+\def\msD{\textit{D}}  % Codex Ephraemi
+
+Critical edition with witness list:
+\begin{itemize}
+    \item \msA = Codex Vaticanus (4th c.)
+    \item \msB = Codex Sinaiticus (4th c.)
+    \item \msC = Codex Alexandrinus (5th c.)
+    \item \msD = Codex Ephraemi Rescriptus (5th c.)
+\end{itemize}
+
+Variant reading:
+\edtext{caelum}{\Afootnote{caelum \msA \msB; caelos \msC \msD}}
+
+\section{Critical Edition Structure}\label{sec:structure}
+A complete critical edition includes:
+
+\begin{enumerate}
+    \item \textbf{Introduction} -- History of the text, manuscripts, stemma
+    \item \textbf{Text} -- Constituted text with line numbers
+    \item \textbf{Apparatus Criticus} -- Substantive variants (A)
+    \item \textbf{Apparatus Orthographicus} -- Orthographic variants (B)
+    \item \textbf{Apparatus Fontium} -- Sources and parallels
+    \item \textbf{Commentary} -- Explanatory notes
+    \item \textbf{Indices} -- Verborum, nominum, locorum
+\end{enumerate}
+
+\section{Stemma Codicum}\label{sec:stemma}
+% Using tikz-qtree or forest for stemma (see 09_tikz_graphics.tex)
+% Simple text representation:
+%
+%                    [Archetype]
+%                       |
+%        +--------------+--------------+
+%        |                             |
+%     [α]                            [β]
+%    /   \                          /   \
+%  [A]  [B]                       [C]   [D]
+
+\section{TEI XML Export Compatibility}\label{sec:tei}
+% For TEI export, use structured markup:
+% <div type="edition">
+%   <p n="1">In principio <app><rdg wit="#A #B">In initio</rdg>
+%   <rdg wit="#C #D">In principio</rdg></app> creavit Deus...</p>
+% </div>
+% <div type="apparatus">
+%   <listApp>
+%     <app n="1"><rdg wit="#A #B">In initio</rdg>
+%     <rdg wit="#C #D">In principio</rdg></app>
+%   </listApp>
+% </div>
+
+\end{document}

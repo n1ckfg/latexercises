@@ -1,0 +1,243 @@
+% 08_twocolumn_siggraph.tex
+% Two-column Siggraph format (ACM SIGGRAPH proceedings style)
+% Overleaf compatible: YES (acmart class)
+
+% ACM SIGGRAPH template
+% Use: acmart class with sigconf option
+% For actual submission, use the official ACM template from:
+% https://www.acm.org/publications/proceedings-template
+
+\documentclass[sigconf,review,anonymous]{acmart}
+% Options:
+% sigconf    - SIGGRAPH conference format (two-column)
+% review     - adds line numbers for review
+% anonymous  - anonymizes authors for double-blind review
+% Non-anonymous: remove 'anonymous' and add author info below
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% ACM metadata (fill in for final submission)
+\acmConference[SIGGRAPH '26]{ACM SIGGRAPH 2026 Conference Papers}{August 2026}{Denver, CO, USA}
+\acmYear{2026}
+\acmISBN{978-1-4503-XXXX-X/26/08}
+\acmDOI{10.1145/XXXXXXX.XXXXXXX}
+
+% Copyright (choose one)
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cusgov}
+%\setcopyright{cusgovmixed}
+
+% For review mode - line numbers
+\linenumbers
+
+% Algorithm2e setup
+\SetAlgoLined
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=cyan
+}
+
+% Paper title
+\title{Two-Column SIGGRAPH Paper Template}
+
+% Authors (anonymous for review)
+%\author{Anonymous Author(s)}
+%\affiliation{\institution{Anonymous Institution}}
+
+% For non-anonymous version:
+%\author{First Author}
+%\authornote{Equal contribution}
+%\affiliation{\institution{University A}}
+%\email{first@university-a.edu}
+%
+%\author{Second Author}
+%\affiliation{\institution{Company B}}
+%\email{second@company-b.com}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This template demonstrates the two-column ACM SIGGRAPH format
+using the \texttt{acmart} class with \texttt{sigconf} option.
+It includes all standard sections, figures, tables, algorithms,
+and references formatted for SIGGRAPH proceedings.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10010147.10010371.10010352.10010379</concept_id>
+<concept_desc>Computing methodologies~Rendering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010371.10010389</concept_id>
+<concept_desc>Computing methodologies~Ray tracing</concept_desc>
+<concept_significance>400</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computing methodologies~Rendering}
+\ccsdesc[400]{Computing methodologies~Ray tracing}
+
+\keywords{rendering, ray tracing, neural networks, real-time graphics}
+
+\begin{teaserfigure}
+\centering
+\fbox{\parbox{0.9\linewidth}{\centering [Teaser Figure: Main result image spanning both columns]}}
+\caption{Teaser figure showing main result. This spans both columns
+using the \texttt{teaserfigure} environment.}\label{fig:teaser}
+\end{teaserfigure}
+
+\section{Introduction}
+\label{sec:intro}
+
+SIGGRAPH papers use the two-column \texttt{acmart} format.
+This template provides a starting point for conference submissions.
+
+Key formatting requirements:
+\begin{itemize}
+    \item Two-column layout (\texttt{sigconf} option)
+    \item 8-10 pages for full papers (excluding references)
+    \item Anonymous submission for double-blind review
+    \item ACM CCS categories and keywords
+    \item Teaser figure spanning both columns
+\end{itemize}
+
+\section{Related Work}
+\label{sec:related}
+
+Cite prior work using \texttt{biblatex} or \texttt{BibTeX} with ACM style.
+Example citations: \cite{knuth1984texbook}, \cite{whitted1980improved},
+\cite{akanine2018realtime}.
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Overview}
+\label{sec:overview}
+
+Our method consists of three stages:
+\begin{enumerate}
+    \item Stage 1: Description
+    \item Stage 2: Description
+    \item Stage 3: Description
+\end{enumerate}
+
+\subsection{Technical Details}
+\label{sec:technical}
+
+Mathematical formulation:
+
+\begin{equation}\label{eq:method}
+L_o(\vb{x}, \omega_o) = \int_{\Omega} f_r(\vb{x}, \omega_i, \omega_o) L_i(\vb{x}, \omega_i) \abs{\vb{n} \vdot \omega_i} \d\omega_i
+\end{equation}
+
+Algorithm pseudocode:
+
+\begin{algorithm}[htbp]
+\caption{Our Algorithm}\label{alg:ours}
+\Input{Input data}
+\Output{Result}
+\ForEach{element}{
+    process\;
+}
+\Return result
+\end{algorithm}
+
+\subsection{Implementation}
+\label{sec:impl}
+
+GPU implementation details. Use \texttt{listings} for code:
+
+\begin{lstlisting}[language=C, caption=CUDA kernel, label=lst:cuda]
+__global__ void kernel(float* data, int n) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) data[idx] *= 2.0f;
+}
+\end{lstlisting}
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Quantitative Evaluation}
+\label{sec:quantitative}
+
+\begin{table}[htbp]
+\caption{Quantitative comparison}\label{tab:quant}
+\begin{tabular}{lccc}
+\toprule
+Method & PSNR $\uparrow$ & SSIM $\uparrow$ & Time (ms) \\
+\midrule
+Baseline & 28.5 & 0.92 & 45 \\
+Ours & \textbf{32.1} & \textbf{0.96} & 52 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Qualitative Results}
+\label{sec:qualitative}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.48\linewidth}
+\centering
+\fbox{\parbox{4cm}{\centering [Input]}}
+\caption{Input}\label{subfig:input}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\linewidth}
+\centering
+\fbox{\parbox{4cm}{\centering [Ours]}}
+\caption{Ours}\label{subfig:ours}
+\end{subfigure}
+\caption{Qualitative comparison}\label{fig:qual}
+\end{figure}
+
+\section{Discussion}
+\label{sec:discussion}
+
+Limitations and future work.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Summary of contributions.
+
+\section{Acknowledgments}
+\label{sec:ack}
+
+We thank reviewers. This work was supported by Grant XXX.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

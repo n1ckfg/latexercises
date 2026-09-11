@@ -1,0 +1,357 @@
+% 07_math_algorithms.tex
+% Complex math, algorithms, and pseudocode for Siggraph
+% Overleaf compatible: YES (standard packages + algorithm2e/algorithmicx)
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% Algorithm2e setup
+\SetAlgoLined
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\SetKw{Continue}{continue}
+\SetKw{Break}{break}
+\SetKw{Return}{return}
+\SetKw{True}{true}
+\SetKw{False}{false}
+\SetKw{And}{and}
+\SetKw{Or}{or}
+\SetKw{Not}{not}
+
+% Listings for code
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    frame=single,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=cyan
+}
+
+\title{Complex Math, Algorithms, and Pseudocode for Siggraph}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This example demonstrates advanced mathematical typesetting,
+algorithm presentation, and pseudocode formatting for computer graphics
+and Siggraph papers. Covers vector calculus, rendering equations,
+optimization, and algorithm pseudocode.
+\end{abstract}
+
+\section{Vector and Matrix Notation}\label{sec:vectors}
+Using \texttt{physics} package for clean notation:
+
+Vectors: $\vb{v}$, $\vu{v}$, $\vb*{x}$.
+Matrices: $\mqty{1 & 2 \\ 3 & 4}$.
+Dot product: $\vb{a} \vdot \vb{b}$.
+Cross product: $\vb{a} \vcross \vb{b}$.
+Norm: $\norm{\vb{v}}$, $\norm{\vb{v}}_2$.
+Gradient: $\grad f$, $\grad \vb{F}$.
+Divergence: $\div \vb{F}$.
+Curl: $\curl \vb{F}$.
+Laplacian: $\laplacian f$.
+
+\section{Rendering Equation}\label{sec:rendering}
+The rendering equation (Kajiya 1986):
+
+\begin{equation}\label{eq:rendering}
+L_o(\vb{x}, \omega_o) = L_e(\vb{x}, \omega_o) + \int_{\Omega} f_r(\vb{x}, \omega_i, \omega_o) L_i(\vb{x}, \omega_i) \abs{\vb{n} \vdot \omega_i} \d\omega_i
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item $L_o$: outgoing radiance
+    \item $L_e$: emitted radiance
+    \item $f_r$: BRDF
+    \item $L_i$: incident radiance
+    \item $\vb{n}$: surface normal
+    \item $\Omega$: hemisphere of directions
+\end{itemize}
+
+\section{Monte Carlo Integration}\label{sec:mc}
+Monte Carlo estimator for \cref{eq:rendering}:
+
+\begin{equation}\label{eq:mc}
+\langle L_o \rangle = \frac{1}{N} \sum_{k=1}^N \frac{f_r(\vb{x}, \omega_k, \omega_o) L_i(\vb{x}, \omega_k) \abs{\vb{n} \vdot \omega_k}}{p(\omega_k)}
+\end{equation}
+
+Importance sampling with PDF $p(\omega)$.
+
+\section{Optimization}\label{sec:optimization}
+Gradient descent update:
+
+\begin{equation}\label{eq:gd}
+\vb{\theta}_{t+1} = \vb{\theta}_t - \eta \grad_{\vb{\theta}} \mathcal{L}(\vb{\theta}_t)
+\end{equation}
+
+Adam optimizer:
+\begin{align}
+m_t &= \beta_1 m_{t-1} + (1 - \beta_1) g_t \\
+v_t &= \beta_2 v_{t-1} + (1 - \beta_2) g_t^2 \\
+\hat{m}_t &= m_t / (1 - \beta_1^t) \\
+\hat{v}_t &= v_t / (1 - \beta_2^t) \\
+\vb{\theta}_{t+1} &= \vb{\theta}_t - \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\end{align}
+
+\section{BRDF Models}\label{sec:brdf}
+Lambertian (diffuse):
+\begin{equation}
+f_r(\omega_i, \omega_o) = \frac{\rho}{\pi}
+\end{equation}
+
+Microfacet (Cook-Torrance):
+\begin{equation}\label{eq:cook-torrance}
+f_r(\omega_i, \omega_o) = \frac{D(\vb{h}) F(\omega_i, \vb{h}) G(\omega_i, \omega_o, \vb{h})}{4 \abs{\vb{n} \vdot \omega_i} \abs{\vb{n} \vdot \omega_o}}
+\end{equation}
+
+Where $\vb{h} = \frac{\omega_i + \omega_o}{\norm{\omega_i + \omega_o}}$.
+
+GGX distribution:
+\begin{equation}
+D(\vb{h}) = \frac{\alpha^2}{\pi \left( (\vb{n} \vdot \vb{h})^2 (\alpha^2 - 1) + 1 \right)^2}
+\end{equation}
+
+Schlick Fresnel:
+\begin{equation}
+F(\omega_i, \vb{h}) = F_0 + (1 - F_0) (1 - \omega_i \vdot \vb{h})^5
+\end{equation}
+
+\section{Algorithm: Path Tracing}\label{sec:pathtrace}
+\begin{algorithm}[htbp]
+\caption{Recursive Path Tracing}\label{alg:pathtrace}
+\Input{Ray $r$, depth $d$, max depth $D$}
+\Output{Radiance $L$}
+\If{$d \ge D$}{\Return 0}
+Intersect $r$ with scene $\to$ hit point $\vb{x}$, normal $\vb{n}$, material $m$\;
+\If{no hit}{\Return background color}
+$L \gets m.L_e$ \tcp*{emitted radiance}
+Sample $\omega_i \sim p(\omega_i | \vb{n})$ \tcp*{importance sample BRDF}
+$r' \gets \text{Ray}(\vb{x}, \omega_i)$
+$L_i \gets \text{PathTrace}(r', d+1, D)$
+$L \gets L + m.f_r(\omega_i, r.\omega_o) \cdot L_i \cdot \frac{\abs{\vb{n} \vdot \omega_i}}{p(\omega_i)}$
+\Return $L$
+\end{algorithm}
+
+\section{Algorithm: BVH Traversal}\label{sec:bvh}
+\begin{algorithm}[htbp]
+\caption{BVH Ray Traversal (Iterative)}\label{alg:bvh}
+\Input{Ray $r$, BVH root node}
+\Output{Closest hit}
+stack $\gets$ empty\;
+push root to stack\;
+$t_{min} \gets \infty$\;
+\While{stack not empty}{
+    node $\gets$ pop stack\;
+    \If{$r$ intersects node.bounds}{
+        \If{node.isLeaf}{
+            \ForEach{tri in node.primitives}{
+                hit $\gets$ intersect(r, tri)\;
+                \If{hit $\land$ hit.t $< t_{min}$}{
+                    $t_{min} \gets$ hit.t\;
+                    closest $\gets$ hit\;
+                }
+            }
+        }\Else{
+            push node.right to stack\;
+            push node.left to stack\;
+        }
+    }
+}
+\Return closest
+\end{algorithm}
+
+\section{Algorithm: Denoising (SVGF)}\label{sec:svgf}
+\begin{algorithm}[htbp]
+\caption{Spatio-Temporal Variance-Guided Filtering}\label{alg:svgf}
+\Input{Noisy image $I_t$, variance $V_t$, motion vectors $M_t$}
+\Output{Denoised image $\hat{I}_t$}
+\ForEach{pixel $x$}{
+    history $\gets$ temporal\_reproject($I_{t-1}$, $M_t$, $x$)\;
+    $V_{hist} \gets$ temporal\_reproject($V_{t-1}$, $M_t$, $x$)\;
+    \If{history valid $\land$ $V_{hist} < V_t(x)$}{
+        $I_t(x) \gets$ lerp($I_t(x)$, history, $\alpha$)\;
+        $V_t(x) \gets \min(V_t(x), V_{hist})$\;
+    }
+}
+\For{$i = 1$ to $k$}{
+    $r_i \gets$ compute\_kernel\_radius($V_t$, $i$)\;
+    $I_t \gets$ atrous\_filter($I_t$, $V_t$, $r_i$)\;
+}
+\Return $I_t$
+\end{algorithm}
+
+\section{Algorithm with Algorithmicx}\label{sec:algorithmicx}
+\begin{algorithm}[htbp]
+\caption{Gradient Descent with Line Search}\label{alg:linesearch}
+\begin{algorithmic}[1]
+\State $\vb{x} \gets \vb{x}_0$
+\State $\alpha \gets 1.0$
+\For{$k = 1$ to $K$}
+    \State $\vb{g} \gets \nabla f(\vb{x})$
+    \If{$\norm{\vb{g}} < \epsilon$}
+        \State \Return $\vb{x}$
+    \EndIf
+    \State $\vb{d} \gets -\vb{g}$
+    \While{$f(\vb{x} + \alpha \vb{d}) > f(\vb{x}) + c_1 \alpha \vb{g}^T \vb{d}$}
+        \State $\alpha \gets \rho \alpha$ \Comment{backtrack}
+    \EndWhile
+    \State $\vb{x} \gets \vb{x} + \alpha \vb{d}$
+\EndFor
+\State \Return $\vb{x}$
+\end{algorithmic}
+\end{algorithm}
+
+\section{Neural Network Notation}\label{sec:nn}
+MLP with ReLU:
+\begin{equation}
+f(\vb{x}) = \vb{W}_L \sigma(\vb{W}_{L-1} \sigma(\dots \sigma(\vb{W}_1 \vb{x} + \vb{b}_1) \dots) + \vb{b}_{L-1}) + \vb{b}_L
+\end{equation}
+
+Positional encoding (NeRF):
+\begin{equation}
+\gamma(\vb{x}) = [\sin(2^0 \pi \vb{x}), \cos(2^0 \pi \vb{x}), \dots, \sin(2^{L-1} \pi \vb{x}), \cos(2^{L-1} \pi \vb{x})]
+\end{equation}
+
+\section{Code Listings}\label{sec:listings}
+GLSL shader snippet:
+\begin{lstlisting}[language=C, caption=GLSL fragment shader, label=lst:glsl]
+#version 330 core
+in vec3 Normal;
+in vec3 WorldPos;
+out vec4 FragColor;
+
+uniform vec3 lightPos;
+uniform vec3 viewPos;
+uniform vec3 lightColor;
+uniform vec3 objectColor;
+
+void main() {
+    // Ambient
+    float ambientStrength = 0.1;
+    vec3 ambient = ambientStrength * lightColor;
+
+    // Diffuse
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - WorldPos);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = diff * lightColor;
+
+    // Specular
+    float specularStrength = 0.5;
+    vec3 viewDir = normalize(viewPos - WorldPos);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 specular = specularStrength * spec * lightColor;
+
+    vec3 result = (ambient + diffuse + specular) * objectColor;
+    FragColor = vec4(result, 1.0);
+}
+\end{lstlisting}
+
+CUDA kernel:
+\begin{lstlisting}[language=C, caption=CUDA ray-triangle intersection, label=lst:cuda]
+__device__ bool intersect_triangle(
+    const Ray& ray,
+    const float3 v0, const float3 v1, const float3 v2,
+    float& t, float& u, float& v) {
+
+    float3 e1 = v1 - v0;
+    float3 e2 = v2 - v0;
+    float3 h = cross(ray.dir, e2);
+    float a = dot(e1, h);
+
+    if (fabsf(a) < 1e-8f) return false;
+
+    float f = 1.0f / a;
+    float3 s = ray.orig - v0;
+    u = f * dot(s, h);
+    if (u < 0.0f || u > 1.0f) return false;
+
+    float3 q = cross(s, e1);
+    v = f * dot(ray.dir, q);
+    if (v < 0.0f || u + v > 1.0f) return false;
+
+    t = f * dot(e2, q);
+    return t > 1e-4f;
+}
+\end{lstlisting}
+
+\section{Theorems and Proofs}\label{sec:theorems}
+\begin{theorem}[Rendering Equation Solution]
+The rendering equation \cref{eq:rendering} has a unique solution
+$L \in L^\infty(\mathcal{M} \times S^2)$ for scenes with
+$\norm{f_r}_\infty < 1$.
+\end{theorem}
+
+\begin{proof}
+Define the transport operator $\mathcal{T}: L \mapsto L_e + \mathcal{K}L$
+where $(\mathcal{K}L)(\vb{x}, \omega_o) = \int f_r L_i \abs{\vb{n} \vdot \omega_i} \d\omega_i$.
+Since $\norm{\mathcal{K}} < 1$, Neumann series $\sum_{k=0}^\infty \mathcal{K}^k L_e$ converges.
+\end{proof}
+
+\begin{lemma}[Unbiased MC Estimator]
+The estimator in \cref{eq:mc} is unbiased: $\E[\langle L_o \rangle] = L_o$.
+\end{lemma}
+
+\begin{proof}
+By linearity of expectation and $p(\omega)$ as the sampling density.
+\end{proof}
+
+\section{Mathematical Symbols Reference}\label{sec:symbols}
+Common symbols used in graphics papers:
+\begin{center}
+\begin{tabular}{ll}
+$\vb{x}, \vb{y}, \vb{z}$ & Position vectors \\
+$\omega_i, \omega_o$ & Incident/outgoing directions \\
+$\vb{n}$ & Surface normal \\
+$\vb{h}$ & Half vector \\
+$L, E$ & Radiance, irradiance \\
+$f_r, \rho$ & BRDF, albedo \\
+$\Omega, \mathcal{M}$ & Hemisphere, scene manifold \\
+$\mathcal{K}$ & Transport operator \\
+$\sigma_t, \sigma_s$ & Extinction, scattering coefficients \\
+$\alpha, \beta$ & Roughness, metallic parameters \\
+\end{tabular}
+\end{center}
+
+\end{document}

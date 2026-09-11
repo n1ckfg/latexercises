@@ -1,0 +1,623 @@
+% 10_complete_paper.tex
+% Combined Digital Humanities + Siggraph Paper Template
+% Overleaf compatible: YES (article class with optional acmart for Siggraph)
+
+% ============================================================
+% DUAL-FORMAT TEMPLATE
+% ============================================================
+% This file can be compiled in two modes:
+% 1. DH Mode (default): Single-column article with critical apparatus
+% 2. Siggraph Mode: Two-column acmart format
+%
+% Switch by changing \dhformattrue / \dhformatfalse below
+% ============================================================
+
+% Format switch - set to true for DH, false for Siggraph
+\newif\ifdhformat
+\dhformattrue  % <-- CHANGE THIS TO SWITCH FORMATS
+
+\ifdhformat
+% ============================================================
+% DIGITAL HUMANITIES FORMAT (Single-column article)
+% ============================================================
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english,french,latin,greek]{babel}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{reledmac}
+\usepackage{reledpar}
+\usepackage{parallel}
+\usepackage{verse}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{footmisc}
+\usepackage{marginnote}
+
+\setmainlanguage{english}
+\setotherlanguages{french,latin,greek}
+
+% Critical apparatus setup
+\Xarrangement[A]{paragraph}
+\Xarrangement[B]{paragraph}
+\linenumincrement*{5}
+\firstlinenum*{1}
+
+\geometry{marginparwidth=3.5cm, marginparsep=0.5cm}
+\usepackage[stable]{footmisc}
+\setlength{\footnotemargin}{1.5em}
+
+\else
+% ============================================================
+% SIGGRAPH FORMAT (Two-column acmart)
+% ============================================================
+\documentclass[sigconf,review,anonymous]{acmart}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\acmConference[SIGGRAPH '26]{ACM SIGGRAPH 2026 Conference Papers}{August 2026}{Denver, CO, USA}
+\acmYear{2026}
+\acmISBN{978-1-4503-XXXX-X/26/08}
+\acmDOI{10.1145/XXXXXXX.XXXXXXX}
+\linenumbers
+
+\fi
+
+% ============================================================
+% COMMON SETUP (both formats)
+% ============================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=cyan
+}
+
+\SetAlgoLined
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    frame=single,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\pgfplotsset{compat=1.18}
+
+\usetikzlibrary{
+    arrows.meta, positioning, shapes.geometric, shapes.misc,
+    calc, decorations.pathreplacing, decorations.markings,
+    matrix, fit, backgrounds, shadows, spy, external
+}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% ============================================================
+% BIBLIOGRAPHY
+% ============================================================
+\ifdhformat
+\usepackage[
+    backend=biber,
+    style=authoryear-comp,
+    sorting=nyt,
+    maxcitenames=2,
+    maxbibnames=99,
+    doi=true,
+    url=true,
+    isbn=false
+]{biblatex}
+\addbibresource{references.bib}
+\else
+% acmart uses BibTeX with ACM style
+\bibliographystyle{ACM-Reference-Format}
+\fi
+
+% ============================================================
+% PAPER METADATA
+% ============================================================
+\title{Unified Framework for Neural Rendering and Critical Text Edition}
+
+\ifdhformat
+\author{Jane Smith\thanks{Equal contribution} \and Robert Jones\thanks{Equal contribution} \and Min-jun Lee}
+\affiliation{%
+    \institution{Institute for Digital Humanities}
+    \city{Berlin}
+    \country{Germany}
+}
+\affiliation{%
+    \institution{Computer Graphics Lab}
+    \city{Tokyo}
+    \country{Japan}
+}
+\date{\today}
+\else
+% Anonymous for review
+\author{Anonymous Author(s)}
+\affiliation{\institution{Anonymous Institution}}
+\fi
+
+% ============================================================
+% DOCUMENT START
+% ============================================================
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present a unified framework bridging neural rendering techniques
+from computer graphics with critical edition methodologies from
+Digital Humanities. Our approach adapts differentiable rendering
+pipelines for manuscript image analysis, enabling automated
+collation, variant detection, and stemma reconstruction. We
+demonstrate applications to both Siggraph-style rendering research
+and DH critical editions, with a shared mathematical foundation
+in volumetric light transport and textual variation modeling.
+\end{abstract}
+
+\ifdhformat
+% DH-specific: Table of contents
+\tableofcontents
+\newpage
+\fi
+
+\ifdhformat
+\else
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10010147.10010371.10010352.10010379</concept_id>
+<concept_desc>Computing methodologies~Rendering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010405.10010432.10010441</concept_id>
+<concept_desc>Applied computing~Digital libraries and archives</concept_desc>
+<concept_significance>400</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computing methodologies~Rendering}
+\ccsdesc[400]{Applied computing~Digital libraries and archives}
+
+\keywords{neural rendering, critical edition, differentiable rendering, stemma codicum, manuscript analysis}
+
+\begin{teaserfigure}
+\centering
+\fbox{\parbox{0.9\linewidth}{\centering [Teaser: Neural collation pipeline showing manuscript $\to$ features $\to$ variants $\to$ stemma]}}
+\caption{Our neural collation pipeline: manuscript images are processed through a differentiable renderer to detect textual variants and reconstruct the stemma codicum.}\label{fig:teaser}
+\end{teaserfigure}
+\fi
+
+% ============================================================
+% 1. INTRODUCTION
+% ============================================================
+\section{Introduction}
+\label{sec:intro}
+
+Computer graphics and Digital Humanities share a common challenge:
+\emph{reconstructing structure from noisy observations}. In graphics,
+we infer 3D scenes from 2D images via differentiable rendering. In DH,
+we reconstruct archetypal texts from variant manuscript witnesses
+via critical edition. This paper establishes a formal connection.
+
+\ifdhformat
+\marginnote{Key insight: Both fields solve inverse problems using differentiable optimization.}
+\else
+\fi
+
+\subsection{Background: Neural Rendering}
+\label{sec:bg-rendering}
+
+Neural rendering \parencite{mildenhall2021nerf,tewari2022advances} represents
+scenes as continuous volumetric functions $F_\theta: (\vb{x}, \omega) \mapsto (c, \sigma)$
+mapping position and direction to color and density. Training minimizes
+photometric loss:
+
+\begin{equation}\label{eq:nerf-loss}
+\mathcal{L} = \sum_{r \in \mathcal{R}} \norm{C(r) - \hat{C}(r)}^2
+\end{equation}
+
+where $C(r)$ is the rendered color of ray $r$ and $\hat{C}(r)$ the target.
+
+\subsection{Background: Critical Edition}
+\label{sec:bg-edition}
+
+A critical edition constructs a constituted text from witnesses
+$W = \{w_1, \dots, w_n\}$ by identifying variants at variation units
+$V = \{v_1, \dots, v_m\}$. The stemma codicum represents the
+genealogical relationships as a directed acyclic graph.
+
+\begin{definition}[Variation Unit]\label{def:varunit}
+A variation unit $v$ is a locus where witnesses disagree,
+with readings $r_v(w_i) \in \mathcal{R}_v$ for each witness $w_i$.
+\end{definition}
+
+\subsection{Our Contribution}
+\label{sec:contrib}
+
+We make three contributions:
+\begin{enumerate}
+    \item A differentiable collation model treating manuscript images
+          as ``renderings'' of an underlying archetypal text.
+    \item A variant detection network trained on synthetic manuscript
+          degradations (ink bleed, warping, damage).
+    \item A stemma reconstruction algorithm using neural embeddings
+          of textual variants, validated on both synthetic and real corpora.
+\end{enumerate}
+
+% ============================================================
+% 2. RELATED WORK
+% ============================================================
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Neural Rendering}
+\label{sec:rw-rendering}
+
+NeRF \parencite{mildenhall2021nerf} introduced coordinate-based MLPs for
+novel view synthesis. Extensions include instant-NGP \parencite{muller2022instant},
+3D Gaussian Splatting \parencite{kerbl20233d}, and differentiable
+rasterization \parencite{laine2020diffrast}.
+
+\subsection{Digital Humanities \& Critical Editions}
+\label{sec:rw-dh}
+
+Computational collation tools include CollateX \parencite{dekker2015collatex},
+Juxta \parencite{juxta}, and the Versioning Machine \parencite{vmachine}.
+Stemmatology uses cladistic methods \parencite{spencer2004cladistics}
+and Bayesian approaches \parencite{barbrook2005bayesian}.
+
+\subsection{Cross-Domain Applications}
+\label{sec:rw-cross}
+
+Recent work applies graphics to DH: document enhancement
+\parencite{stamatopoulos2020document}, layout analysis
+\parencite{pavlopoulos2023layout}, and HTR \parencite{bluche2017htr}.
+Our work is the first to use differentiable rendering for collation.
+
+% ============================================================
+% 3. METHOD
+% ============================================================
+\section{Method}
+\label{sec:method}
+
+\subsection{Problem Formulation}
+\label{sec:formulation}
+
+Given manuscript images $\{I_k\}_{k=1}^N$ of the same text passage,
+we seek the archetypal text $T^*$ and stemma $\mathcal{S}$.
+We model each witness as a degraded rendering:
+
+\begin{equation}\label{eq:degradation}
+I_k = \mathcal{D}_k \circ \mathcal{R}(T^*) + \epsilon_k
+\end{equation}
+
+where $\mathcal{R}$ renders text to image, $\mathcal{D}_k$ applies
+witness-specific degradations, and $\epsilon_k$ is noise.
+
+\subsection{Differentiable Text Renderer}
+\label{sec:renderer}
+
+We implement $\mathcal{R}$ as a differentiable pipeline:
+
+\begin{enumerate}
+    \item \textbf{Text Layout}: Characters $\to$ positioned glyphs
+    \item \textbf{Rasterization}: Glyphs $\to$ soft coverage masks
+    \item \textbf{Degradation}: Physics-based ink/paper simulation
+\end{enumerate}
+
+\textbf{Soft Rasterization.} For each pixel $p$, coverage of glyph $g$:
+\begin{equation}
+\alpha_g(p) = \sigma\left( \frac{d_g(p)}{\tau} \right)
+\end{equation}
+where $d_g(p)$ is signed distance, $\tau$ temperature, $\sigma$ sigmoid.
+
+\textbf{Ink Simulation.} Blot model via convolution:
+\begin{equation}
+I_{ink} = \alpha * k_{blot} + \mathcal{N}(0, \sigma_{paper})
+\end{equation}
+with kernel $k_{blot}$ modeling feathering.
+
+\subsection{Variant Detection Network}
+\label{sec:variant-net}
+
+Architecture: U-Net with attention, trained to predict
+variant heatmaps from paired manuscript crops.
+
+\begin{algorithm}[htbp]
+\caption{Variant Detection Training}\label{alg:variant}
+\Input{Paired crops $(I_a, I_b)$, ground truth variants $V$}
+\Output{Detector $D_\theta$}
+\For{epoch = 1 to $E$}{
+    Sample batch $\{(I_a^i, I_b^i, V^i)\}$\;
+    $\hat{V}^i \gets D_\theta(I_a^i, I_b^i)$\;
+    $\mathcal{L} \gets \text{BCE}(\hat{V}^i, V^i) + \lambda \text{Dice}(\hat{V}^i, V^i)$\;
+    $\theta \gets \theta - \eta \nabla_\theta \mathcal{L}$\;
+}
+\Return $D_\theta$
+\end{algorithm}
+
+\subsection{Stemma Reconstruction}
+\label{sec:stemma-rec}
+
+We embed each witness reading $r_v(w_i)$ into a latent space
+using a transformer encoder. Pairwise distances $d_{ij}$ define
+edge weights for maximum parsimony:
+
+\begin{equation}\label{eq:parsimony}
+\mathcal{S}^* = \argmin_{\mathcal{S}} \sum_{(i,j) \in \mathcal{S}} d_{ij}
+\end{equation}
+
+Solved via neighbor-joining with bootstrap support.
+
+% ============================================================
+% 4. EXPERIMENTS
+% ============================================================
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Synthetic Manuscript Corpus}
+\label{sec:synthetic}
+
+We generate 10,000 synthetic witnesses from 100 base texts
+using our differentiable renderer with randomized degradations:
+\begin{itemize}
+    \item Ink: bleed $\sim \mathcal{U}(0, 3px)$, feather $\sim \mathcal{U}(0, 2px)$
+    \item Paper: texture $\sim$ Perlin noise, stains $\sim$ Poisson disk
+    \item Damage: tears, holes, fading $\sim$ procedural
+    \item Layout: warp $\sim$ TPS, skew $\sim \mathcal{U}(-5^\circ, 5^\circ)$
+\end{itemize}
+
+\begin{table}[htbp]
+\caption{Synthetic corpus statistics}\label{tab:synthetic}
+\begin{tabular}{lcc}
+\toprule
+Parameter & Range & Distribution \\
+\midrule
+Base texts & 100 & Latin, Greek, Medieval \\
+Witnesses per text & 50--200 & Uniform \\
+Variants per text & 10--50 & Poisson($\lambda=25$) \\
+Degradation types & 12 & Categorical \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Collation Accuracy}
+\label{sec:collation-acc}
+
+\begin{table}[htbp]
+\caption{Variant detection F1 scores}\label{tab:collation}
+\begin{tabular}{lcccc}
+\toprule
+Method & Precision & Recall & F1 & Speed (img/s) \\
+\midrule
+CollateX (baseline) & 0.72 & 0.68 & 0.70 & 120 \\
+HTR + Alignment & 0.78 & 0.74 & 0.76 & 15 \\
+Ours (no pretrain) & 0.85 & 0.81 & 0.83 & 45 \\
+Ours (pretrained) & \textbf{0.92} & \textbf{0.89} & \textbf{0.90} & 45 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Stemma Reconstruction}
+\label{sec:stemma-exp}
+
+\begin{table}[htbp]
+\caption{Stemma accuracy (Robinson-Foulds distance)}\label{tab:stemma}
+\begin{tabular}{lccc}
+\toprule
+Method & RF Distance $\downarrow$ & Bootstrap Support & Time \\
+\midrule
+Cladistic (PAUP) & 0.34 & 0.62 & 120s \\
+Bayesian (MrBayes) & 0.28 & 0.71 & 3600s \\
+Neighbor-Joining & 0.31 & 0.65 & 2s \\
+Ours (embedding + NJ) & \textbf{0.22} & \textbf{0.83} & 5s \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Real Manuscript Case Study}
+\label{sec:case-study}
+
+We apply our pipeline to the \emph{Codex Vaticanus} / \emph{Sinaiticus}
+Gospel parallels (Matthew 1--5), 472 variation units, 4 witnesses.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.48\linewidth}
+\centering
+\fbox{\parbox{4cm}{\centering [Manuscript crop A]}}
+\caption{Vaticanus}\label{subfig:vat}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\linewidth}
+\centering
+\fbox{\parbox{4cm}{\centering [Manuscript crop B]}}
+\caption{Sinaiticus}\label{subfig:sin}
+\end{subfigure}
+\caption{Manuscript crops with detected variants highlighted}\label{fig:manuscripts}
+\end{figure}
+
+Results: 94\% variant recall, reconstructed stemma matches
+scholarly consensus with 89\% bootstrap support.
+
+% ============================================================
+% 5. DISCUSSION
+% ============================================================
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Limitations}
+\label{sec:limitations}
+
+\begin{itemize}
+    \item Requires paired training data (synthetic mitigates this)
+    \item Assumes known text segmentation (line detection needed)
+    \item Latin/Greek scripts only; CJK/Indic future work
+    \item Computational cost: 45 img/s on RTX 4090
+\end{itemize}
+
+\subsection{Applications Beyond Manuscripts}
+\label{sec:applications}
+
+\begin{itemize}
+    \item \textbf{Inscriptions}: 3D scanning + differentiable rendering for eroded stone
+    \item \textbf{Palimpsests}: Multi-spectral layers as volumetric channels
+    \item \textbf{Printed books}: Edition collation for early modern texts
+    \item \textbf{Born-digital}: Version control for collaborative writing
+\end{itemize}
+
+\subsection{Ethical Considerations}
+\label{sec:ethics}
+
+Automated collation must not replace expert judgment.
+Our tool outputs \emph{probabilistic} variants requiring
+scholarly verification. We release model weights with
+``human-in-the-loop'' licensing.
+
+% ============================================================
+% 6. CONCLUSION
+% ============================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+We unified neural rendering and critical edition through
+differentiable text rendering. Our framework achieves
+state-of-the-art collation and stemma reconstruction,
+demonstrating that graphics techniques transfer productively
+to Digital Humanities. Code and data at \url{github.com/example/neural-collation}.
+
+% ============================================================
+% ACKNOWLEDGMENTS
+% ============================================================
+\section*{Acknowledgments}
+
+We thank the Berlin State Library for manuscript access.
+Funded by DFG Grant SM 123/4-1 and JSPS KAKENHI 23K12345.
+
+% ============================================================
+% BIBLIOGRAPHY
+% ============================================================
+\ifdhformat
+\printbibliography
+\else
+\bibliography{references}
+\fi
+
+% ============================================================
+% APPENDICES (DH format only)
+% ============================================================
+\ifdhformat
+\appendix
+\section{Supplemental: Full Variant Tables}
+\label{app:variants}
+
+% Full apparatus would go here
+See supplementary material for complete apparatus criticus.
+
+\section{Supplemental: Stemma Visualization}
+\label{app:stemma-full}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=1cm and 1.5cm,
+    ms/.style={ellipse, draw, minimum width=1.5cm, minimum height=0.7cm, fill=blue!10, font=\itshape\small},
+    lost/.style={ellipse, draw, dashed, minimum width=1.5cm, minimum height=0.7cm, fill=red!10, font=\itshape\small},
+    arrow/.style={-Stealth, thick}
+]
+\node[lost] (O) {O};
+\node[lost, below left=of O] (a) {$\alpha$};
+\node[lost, below right=of O] (b) {$\beta$};
+\node[ms, below left=of a] (A) {A};
+\node[ms, below right=of a] (B) {B};
+\node[ms, below left=of b] (C) {C};
+\node[ms, below right=of b] (D) {D};
+\draw[arrow] (O) -- (a); \draw[arrow] (O) -- (b);
+\draw[arrow] (a) -- (A); \draw[arrow] (a) -- (B);
+\draw[arrow] (b) -- (C); \draw[arrow] (b) -- (D);
+\end{tikzpicture}
+\caption{Full stemma with bootstrap values}\label{fig:stemma-full}
+\end{figure}
+
+\section{Supplemental: Degradation Parameters}
+\label{app:degradation}
+
+\begin{table}[htbp]
+\caption{Full degradation parameter ranges}\label{tab:degradation-full}
+\begin{tabular}{lll}
+\toprule
+Category & Parameter & Range \\
+\midrule
+Ink & bleed\_radius & $\mathcal{U}(0, 3)$ px \\
+Ink & feather\_sigma & $\mathcal{U}(0, 2)$ px \\
+Ink & intensity\_drop & $\mathcal{U}(0.7, 1.0)$ \\
+Paper & perlin\_scale & $\mathcal{U}(0.01, 0.05)$ \\
+Paper & stain\_count & $\text{Poisson}(3)$ \\
+Paper & stain\_opacity & $\mathcal{U}(0.1, 0.4)$ \\
+Damage & tear\_prob & 0.1 \\
+Damage & hole\_prob & 0.05 \\
+Damage & fade\_factor & $\mathcal{U}(0.5, 1.0)$ \\
+Layout & warp\_magnitude & $\mathcal{U}(0, 10)$ px \\
+Layout & skew\_angle & $\mathcal{U}(-5^\circ, 5^\circ)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\fi
+
+\end{document}

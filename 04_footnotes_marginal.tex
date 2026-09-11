@@ -1,0 +1,131 @@
+% 04_footnotes_marginal.tex
+% Footnotes and marginal notes for Digital Humanities
+% Overleaf compatible: YES (standard packages)
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{footmisc}
+\usepackage{marginnote}
+\usepackage{geometry}
+\usepackage{fontspec}
+
+% For marginal notes
+\geometry{marginparwidth=3.5cm, marginparsep=0.5cm}
+
+% Footnote configuration
+\usepackage[stable]{footmisc}  % Stable footnotes for floats
+\setlength{\footnotemargin}{1.5em}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=cyan
+}
+
+\title{Footnotes and Marginal Notes for Digital Humanities}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This example demonstrates footnote and marginal note techniques
+essential for Digital Humanities scholarship: critical apparatus,
+editorial notes, parallel texts, and manuscript annotations.
+\end{abstract}
+
+\section{Basic Footnotes}\label{sec:basic}
+Standard footnote\footnote{This is a standard footnote.}.
+
+Multiple footnotes\footnote{First footnote.}\footnote{Second footnote.}.
+
+Footnote with citation\footnote{See \textcite{knuth1984texbook} for details.}.
+
+Long footnote with multiple paragraphs\footnote{
+This is a longer footnote that spans multiple paragraphs.
+
+It can contain detailed commentary, source discussions,
+or editorial remarks common in critical editions.
+}.
+
+\section{Symbolic Footnotes}\label{sec:symbolic}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+Symbol footnotes\footnote{First symbolic footnote.}
+for front matter\footnote{Second symbolic footnote.}
+or title pages\footnote{Third symbolic footnote.}.
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\section{Critical Apparatus Footnotes}\label{sec:apparatus}
+Apparatus footnotes for textual variants:
+
+The manuscript reads ``manuscript variant''
+\footnote{A: manuscript variant; B: printed edition variant; C: corrected variant.}
+while the printed edition has ``printed variant''
+\footnote{A: printed variant; B: manuscript variant.}.
+
+Parallel passages\footnote{Parallel passage in MS Vat. lat. 1234, fol. 12v.}.
+
+Conjectural emendation\footnote{Conjectured by Smith (2020); see \textcite{smith2023dh}.}.
+
+\section{Marginal Notes}\label{sec:marginal}
+Marginal notes appear in the margin\marginnote{This is a marginal note.}.
+
+\marginnote{%
+  \textbf{Editorial note:} This passage shows evidence of later interpolation.
+  The hand changes at this point.
+}[-1cm]% vertical offset
+
+Inline marginal note\marginnote{Short note.}.
+
+Longer marginal note with multiple lines\marginnote{%
+This is a longer marginal note that can contain
+editorial commentary, translation notes,
+or cross-references to other witnesses.
+}.
+
+\section{Parallel Text / Facing Pages}\label{sec:parallel}
+\begin{quote}
+\marginnote{\textbf{Latin}:}\textit{Hic est textus latinus.}\\
+\textbf{English}: This is the Latin text.\marginnote{Translation by J. Doe, 2023.}
+\end{quote}
+
+\section{Manuscript Annotations}\label{sec:manuscript}
+Marginalia reproduction:
+\begin{quotation}
+\marginnote{\textit{Marginalia (Hand A):} ``Nota bene''}%
+Main text with manuscript marginalia reproduced in the margin.
+\end{quotation}
+
+\section{Footnote in Minipage/Table}\label{sec:minipage}
+Footnotes in tables require special handling:
+
+\begin{table}[htbp]
+\centering
+\begin{minipage}{\linewidth}
+\centering
+\begin{tabular}{ll}
+\hline
+Column 1 & Column 2 \\
+\hline
+Data A\footnote{Table footnote A.} & Data B\footnote{Table footnote B.} \\
+Data C & Data D \\
+\hline
+\end{tabular}
+\caption{Table with footnotes}
+\end{minipage}
+\end{table}
+
+\section{Endnotes Alternative}\label{sec:endnotes}
+% For endnotes, use \usepackage{endnotes} and \let\footnote=\endnote
+% Then \theendnotes at the end of document/chapter.
+
+\end{document}

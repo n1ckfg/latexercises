@@ -1,0 +1,95 @@
+% 03_citations_bibliography.tex
+% Citations and bibliography with biblatex
+% Overleaf compatible: YES (biblatex + biber backend)
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\usepackage[
+    backend=biber,
+    style=authoryear-comp,
+    sorting=nyt,
+    maxcitenames=2,
+    maxbibnames=99,
+    doi=true,
+    url=true,
+    isbn=false,
+    uniquename=init
+]{biblatex}
+
+\addbibresource{references.bib}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=cyan
+}
+
+\title{Citations and Bibliography with \texttt{biblatex}}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This example demonstrates citations and bibliography management using
+\texttt{biblatex} with \texttt{biber} backend. Includes various citation
+styles, multiple citations, and bibliography formatting.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+Academic writing requires proper attribution. \LaTeX{} with \texttt{biblatex}
+provides powerful citation management.
+
+\section{Single Citations}\label{sec:single}
+Standard citation: \textcite{knuth1984texbook}.
+Parenthetical: \parencite{knuth1984texbook}.
+Page reference: \parencite[pp.~123--125]{knuth1984texbook}.
+Year only: \citeyear{knuth1984texbook}.
+Author only: \citeauthor{knuth1984texbook}.
+
+\section{Multiple Citations}\label{sec:multiple}
+Multiple works: \parencite{knuth1984texbook,lamport1994latex,goossens1994companion}.
+Multiple with pages: \parencite[pp.~10--15]{knuth1984texbook}[ch.~3]{lamport1994latex}.
+Author-year style: \textcite{knuth1984texbook,lamport1994latex} discuss typesetting.
+
+\section{Citation Variants}\label{sec:variants}
+\begin{itemize}
+    \item \texttt{\textbackslash textcite}: \textcite{knuth1984texbook}
+    \item \texttt{\textbackslash parencite}: \parencite{knuth1984texbook}
+    \item \texttt{\textbackslash cite}: \cite{knuth1984texbook}
+    \item \texttt{\textbackslash citeauthor}: \citeauthor{knuth1984texbook}
+    \item \texttt{\textbackslash citeyear}: \citeyear{knuth1984texbook}
+    \item \texttt{\textbackslash citetitle}: \citetitle{knuth1984texbook}
+    \item \texttt{\textbackslash fullcite}: \fullcite{knuth1984texbook}
+    \item \texttt{\textbackslash footcite}\footcite{knuth1984texbook}
+\end{itemize}
+
+\section{Digital Humanities Sources}\label{sec:dh}
+DH-specific citations:
+\begin{itemize}
+    \item TEI Guidelines: \parencite{tei2020guidelines}
+    \item Digital edition: \parencite{briscoe2017digital}
+    \item Corpus linguistics: \parencite{mccarthy2010corpus}
+\end{itemize}
+
+\section{Siggraph/CS Sources}\label{sec:siggraph}
+Computer graphics citations:
+\begin{itemize}
+    \item Ray tracing: \parencite{whitted1980improved}
+    \item Real-time rendering: \parencite{akanine2018realtime}
+    \item GPU computing: \parencite{nvidia2020cuda}
+\end{itemize}
+
+\section{Bibliography}\label{sec:bib}
+\printbibliography[heading=none]
+
+\end{document}
